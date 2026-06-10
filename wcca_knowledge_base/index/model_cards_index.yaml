@@ -1,0 +1,22 @@
+model_cards:
+  - kb_card_id: KB-MODEL-resistor_divider-1.0.0
+    path: wcca_knowledge_base/model_cards/KB-MODEL-resistor_divider-1.0.0.yaml
+    model_id: resistor_divider
+    model_version: 1.0.0
+    status: approved
+  - kb_card_id: KB-MODEL-ldo_power_rail-1.0.0
+    path: wcca_knowledge_base/model_cards/KB-MODEL-ldo_power_rail-1.0.0.yaml
+    model_id: ldo_power_rail
+    model_version: 1.0.0
+    status: approved
+  - kb_card_id: KB-MODEL-comparator_threshold-1.0.0
+    path: wcca_knowledge_base/model_cards/KB-MODEL-comparator_threshold-1.0.0.yaml
+    model_id: comparator_threshold
+    model_version: 1.0.0
+    status: approved
+  - kb_card_id: KB-MODEL-rc_delay-1.0.0
+    path: wcca_knowledge_base/model_cards/KB-MODEL-rc_delay-1.0.0.yaml
+    model_id: rc_delay
+    model_version: 1.0.0
+    status: approved
+

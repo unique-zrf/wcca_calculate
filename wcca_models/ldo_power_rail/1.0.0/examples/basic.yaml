@@ -1,0 +1,17 @@
+project:
+  name: ldo_power_rail_basic
+circuit_blocks:
+  - id: PWR_3V3
+    type: ldo_power_rail
+    selected_model:
+      model_id: ldo_power_rail
+      model_version: 1.0.0
+    requirements:
+      - id: REQ-PWR-001
+        min_value: 3.135
+        max_value: 3.465
+        unit: V
+    inputs:
+      vout_nominal: {value: 3.3, unit: V, parameter_type: nominal, source: {type: design, document_id: SCH}, review_status: confirmed}
+      output_accuracy: {value: 2, unit: "%", parameter_type: max, source: {type: datasheet, document_id: DS-LDO}, review_status: confirmed}
+

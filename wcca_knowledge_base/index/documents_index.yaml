@@ -1,0 +1,96 @@
+documents:
+  - document_id: DS-RES
+    doc_type: datasheet
+    title: Sample 1% Thick Film Resistor Datasheet
+    path: wcca_knowledge_base/datasheets/sample/DS-RES/metadata.yaml
+    part_numbers:
+      - RC0402FR-07100KL
+      - RC0402FR-0710KL
+    keywords:
+      - resistor
+      - tolerance
+      - tempco
+      - divider
+    summary: Provides resistance tolerance and temperature coefficient source data for sample resistor-divider, comparator-threshold, and RC-delay calculations.
+  - document_id: DS-LDO
+    doc_type: datasheet
+    title: Sample 3.3V LDO Datasheet
+    path: wcca_knowledge_base/datasheets/sample/DS-LDO/metadata.yaml
+    part_numbers:
+      - SAMPLE-LDO-3V3
+    keywords:
+      - ldo
+      - output accuracy
+      - load regulation
+      - line regulation
+    summary: Provides output accuracy, load regulation, and line regulation source data for sample LDO power-rail calculations.
+  - document_id: DS-CMP
+    doc_type: datasheet
+    title: Sample Comparator Datasheet
+    path: wcca_knowledge_base/datasheets/sample/DS-CMP/metadata.yaml
+    part_numbers:
+      - SAMPLE-CMP-001
+    keywords:
+      - comparator
+      - reference
+      - input offset
+      - threshold
+    summary: Provides reference-voltage and input-offset source data for sample comparator-threshold calculations.
+  - document_id: DS-CAP
+    doc_type: datasheet
+    title: Sample Ceramic Capacitor Datasheet
+    path: wcca_knowledge_base/datasheets/sample/DS-CAP/metadata.yaml
+    part_numbers:
+      - CL05B224KP5NNNC
+    keywords:
+      - capacitor
+      - tolerance
+      - rc delay
+    summary: Provides capacitance tolerance source data for sample RC-delay calculations.
+  - document_id: DS-RESET
+    doc_type: datasheet
+    title: Sample Reset Input Threshold Datasheet
+    path: wcca_knowledge_base/datasheets/sample/DS-RESET/metadata.yaml
+    part_numbers:
+      - SAMPLE-RESET-001
+    keywords:
+      - reset
+      - threshold
+      - rc delay
+    summary: Provides reset threshold source data for sample RC-delay calculations.
+  - document_id: REQ-SAMPLE
+    doc_type: requirement
+    title: Phase 1 Sample Requirements
+    path: examples/project_sample/input/requirements/requirements.csv
+    part_numbers: []
+    keywords:
+      - requirements
+      - voltage limits
+      - timing limits
+    summary: Sample requirement table used to demonstrate requirement-to-calculation traceability.
+  - document_id: BOM-SAMPLE
+    doc_type: bom
+    title: Phase 1 Sample BOM
+    path: examples/project_sample/input/bom/sample_bom.csv
+    part_numbers:
+      - RC0402FR-07100KL
+      - RC0402FR-0710KL
+      - CL05B224KP5NNNC
+      - SAMPLE-LDO-3V3
+      - SAMPLE-CMP-001
+      - SAMPLE-RESET-001
+    keywords:
+      - bom
+      - component
+      - sample project
+    summary: Sample BOM used by extraction and normalization tests; not a production project BOM.
+  - document_id: SCH-SAMPLE
+    doc_type: schematic
+    title: Phase 1 Sample Schematic Source
+    path: examples/project_sample/input/netlist/sample_netlist.csv
+    part_numbers: []
+    keywords:
+      - schematic
+      - netlist
+      - topology
+    summary: Sample schematic/netlist source used for topology hints and model-candidate generation.

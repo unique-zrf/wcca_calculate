@@ -1,0 +1,6 @@
+Requirement ID,Model ID,Description,Min,Max,Unit
+REQ-DRAFT-DIV,resistor_divider,Divider output shall remain within ADC safe sampling range.,0.415,0.55,V
+REQ-DRAFT-CMP,comparator_threshold,Comparator UVLO threshold shall stay within expected range.,1.1,1.4,V
+REQ-DRAFT-PWR,ldo_power_rail,3.3V rail shall remain within +/-5%.,3.135,3.465,V
+REQ-DRAFT-RC,rc_delay,Reset delay shall be between 6 ms and 14 ms.,0.006,0.014,s
+

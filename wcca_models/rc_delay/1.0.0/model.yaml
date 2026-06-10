@@ -1,0 +1,58 @@
+model_id: rc_delay
+model_name: RC Delay Worst Case Model
+version: 1.0.0
+status: approved
+owner: hardware-wcca-team
+kb_card_id: KB-MODEL-rc_delay-1.0.0
+formula_doc: formula.md
+review_record: review_record.md
+circuit_types:
+  - rc_delay
+inputs:
+  - name: r
+    unit: ohm
+    required: true
+    fields: [nominal, tolerance]
+  - name: c
+    unit: F
+    required: true
+    fields: [nominal, tolerance]
+  - name: v_initial_min
+    unit: V
+    required: true
+    source_required: true
+  - name: v_initial_max
+    unit: V
+    required: true
+    source_required: true
+  - name: threshold_min
+    unit: V
+    required: true
+    source_required: true
+  - name: threshold_max
+    unit: V
+    required: true
+    source_required: true
+outputs:
+  - name: delay_nominal
+    unit: s
+  - name: delay_worst_min
+    unit: s
+  - name: delay_worst_max
+    unit: s
+  - name: margin_min
+    unit: "%"
+  - name: margin_max
+    unit: "%"
+  - name: pass_fail
+    unit: string
+capabilities:
+  supports_worst_case: true
+  supports_rss: false
+  supports_monte_carlo: false
+  engineer_review_required: true
+review:
+  reviewers: [hardware_engineer, wcca_engineer]
+  approved_at: 2026-06-09
+  approval_record: review_record.md
+

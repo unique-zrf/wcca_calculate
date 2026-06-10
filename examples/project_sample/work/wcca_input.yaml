@@ -1,0 +1,111 @@
+project:
+  name: Phase1Sample
+  document_type: WCCA
+
+circuit_blocks:
+  - id: DIV_5V_TO_ADC
+    name: 5V ADC Divider
+    type: resistor_divider
+    selected_model:
+      model_id: resistor_divider
+      model_version: 1.0.0
+      selection_status: engineer_confirmed
+      confirmed_by: sample_engineer
+    requirements:
+      - id: REQ-DIV-001
+        description: Divider output shall remain within ADC safe sampling range.
+        min_value: 0.415
+        max_value: 0.55
+        unit: V
+        source: {type: requirement, document_id: REQ-SAMPLE}
+        review_status: confirmed
+    inputs:
+      vin_min: {value: 4.75, unit: V, parameter_type: min, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      vin_max: {value: 5.25, unit: V, parameter_type: max, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      temperature_min: {value: -40, unit: degC, parameter_type: min, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      temperature_max: {value: 85, unit: degC, parameter_type: max, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      r_top:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+        tempco: {value: 100, unit: ppm/C, parameter_type: max, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      r_bottom:
+        nominal: {value: 10000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+        tempco: {value: 100, unit: ppm/C, parameter_type: max, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+
+  - id: PWR_3V3
+    name: 3.3V LDO Rail
+    type: ldo_power_rail
+    selected_model:
+      model_id: ldo_power_rail
+      model_version: 1.0.0
+      selection_status: engineer_confirmed
+      confirmed_by: sample_engineer
+    requirements:
+      - id: REQ-PWR-001
+        description: 3.3V rail shall remain within +/-5%.
+        min_value: 3.135
+        max_value: 3.465
+        unit: V
+        source: {type: requirement, document_id: REQ-SAMPLE}
+        review_status: confirmed
+    inputs:
+      vout_nominal: {value: 3.3, unit: V, parameter_type: nominal, source: {type: schematic, document_id: SCH-SAMPLE}, review_status: confirmed}
+      output_accuracy: {value: 2, unit: "%", parameter_type: max, source: {type: datasheet, document_id: DS-LDO}, review_status: confirmed}
+      load_regulation: {value: 0.5, unit: "%", parameter_type: max, source: {type: datasheet, document_id: DS-LDO}, review_status: confirmed}
+      line_regulation: {value: 0.5, unit: "%", parameter_type: max, source: {type: datasheet, document_id: DS-LDO}, review_status: confirmed}
+
+  - id: CMP_UVLO
+    name: Comparator UVLO Threshold
+    type: comparator_threshold
+    selected_model:
+      model_id: comparator_threshold
+      model_version: 1.0.0
+      selection_status: engineer_confirmed
+      confirmed_by: sample_engineer
+    requirements:
+      - id: REQ-CMP-001
+        description: UVLO threshold shall stay within expected range.
+        min_value: 1.1
+        max_value: 1.4
+        unit: V
+        source: {type: requirement, document_id: REQ-SAMPLE}
+        review_status: confirmed
+    inputs:
+      vref_min: {value: 2.45, unit: V, parameter_type: min, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      vref_max: {value: 2.55, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      input_offset: {value: 0.005, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      r_top:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      r_bottom:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+
+  - id: RESET_DELAY
+    name: Reset RC Delay
+    type: rc_delay
+    selected_model:
+      model_id: rc_delay
+      model_version: 1.0.0
+      selection_status: engineer_confirmed
+      confirmed_by: sample_engineer
+    requirements:
+      - id: REQ-RC-001
+        description: Reset delay shall be between 6 ms and 14 ms.
+        min_value: 0.006
+        max_value: 0.014
+        unit: s
+        source: {type: requirement, document_id: REQ-SAMPLE}
+        review_status: confirmed
+    inputs:
+      r:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      c:
+        nominal: {value: 0.00000022, unit: F, parameter_type: nominal, source: {type: bom, document_id: BOM-SAMPLE}, review_status: confirmed}
+        tolerance: {value: 10, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-CAP}, review_status: confirmed}
+      v_initial_min: {value: 3.135, unit: V, parameter_type: min, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      v_initial_max: {value: 3.465, unit: V, parameter_type: max, source: {type: requirement, document_id: REQ-SAMPLE}, review_status: confirmed}
+      threshold_min: {value: 1.0, unit: V, parameter_type: min, source: {type: datasheet, document_id: DS-RESET}, review_status: confirmed}
+      threshold_max: {value: 1.2, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-RESET}, review_status: confirmed}

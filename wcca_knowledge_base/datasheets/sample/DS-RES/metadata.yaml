@@ -1,0 +1,10 @@
+document_id: DS-RES
+doc_type: datasheet
+title: Sample 1% Thick Film Resistor Datasheet
+part_numbers:
+  - RC0402FR-07100KL
+  - RC0402FR-0710KL
+parameters:
+  - resistance_tolerance
+  - temperature_coefficient
+usage_note: Sample metadata only; no vendor datasheet content is embedded.

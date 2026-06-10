@@ -1,0 +1,48 @@
+model_id: ldo_power_rail
+model_name: LDO Power Rail Worst Case Model
+version: 1.0.0
+status: approved
+owner: hardware-wcca-team
+kb_card_id: KB-MODEL-ldo_power_rail-1.0.0
+formula_doc: formula.md
+review_record: review_record.md
+circuit_types:
+  - ldo_power_rail
+inputs:
+  - name: vout_nominal
+    unit: V
+    required: true
+    source_required: true
+  - name: output_accuracy
+    unit: "%"
+    required: true
+    source_required: true
+  - name: load_regulation
+    unit: "%"
+    required: false
+  - name: line_regulation
+    unit: "%"
+    required: false
+outputs:
+  - name: vout_nominal
+    unit: V
+  - name: vout_worst_min
+    unit: V
+  - name: vout_worst_max
+    unit: V
+  - name: margin_min
+    unit: "%"
+  - name: margin_max
+    unit: "%"
+  - name: pass_fail
+    unit: string
+capabilities:
+  supports_worst_case: true
+  supports_rss: false
+  supports_monte_carlo: false
+  engineer_review_required: true
+review:
+  reviewers: [hardware_engineer, wcca_engineer]
+  approved_at: 2026-06-09
+  approval_record: review_record.md
+

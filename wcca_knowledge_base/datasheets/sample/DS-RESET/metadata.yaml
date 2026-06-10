@@ -1,0 +1,8 @@
+document_id: DS-RESET
+doc_type: datasheet
+title: Sample Reset Input Threshold Datasheet
+part_numbers:
+  - SAMPLE-RESET-001
+parameters:
+  - reset_threshold
+usage_note: Sample metadata only; no vendor datasheet content is embedded.

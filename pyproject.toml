@@ -1,0 +1,29 @@
+[project]
+name = "wcca-automation"
+version = "0.1.0"
+description = "Phase 1 WCCA automation CLI, calculation models, and local knowledge cards."
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6.0",
+  "openpyxl>=3.1",
+]
+
+[tool.setuptools]
+packages = ["wcca_cli", "wcca_models", "wcca_knowledge_base"]
+
+[tool.setuptools.package-data]
+wcca_models = [
+  "registry.yaml",
+  "*/*/model.yaml",
+  "*/*/implementation.py",
+  "*/*/formula.md",
+  "*/*/review_record.md",
+  "*/*/examples/*.yaml",
+  "*/*/tests/*.py",
+]
+wcca_knowledge_base = [
+  "model_cards/*.yaml",
+  "index/*.yaml",
+  "review_notes/*.md",
+  "datasheets/*/*/*.yaml",
+]

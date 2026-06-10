@@ -1,0 +1,29 @@
+kb_card_id: KB-MODEL-ldo_power_rail-1.0.0
+doc_type: calculation_model_card
+model_id: ldo_power_rail
+model_version: 1.0.0
+status: approved
+applicable_circuits:
+  - ldo_power_rail
+required_parameters:
+  - vout_nominal
+  - output_accuracy
+outputs:
+  - vout_nominal
+  - vout_worst_min
+  - vout_worst_max
+  - margin_min
+  - margin_max
+  - pass_fail
+limitations:
+  - Does not model dropout failure.
+  - Does not model transient response.
+  - Does not include thermal shutdown or current limiting.
+source_files:
+  - path: wcca_models/ldo_power_rail/1.0.0/model.yaml
+    sha256: 599fd6fe23ef3b648bb7846dbeeadfd4c8c9da838463363fc1389809c59533dd
+  - path: wcca_models/ldo_power_rail/1.0.0/formula.md
+    sha256: 0f10058560f743581f1c8073757117b804f20b96dde8e0a12df3e9edda405841
+  - path: wcca_models/ldo_power_rail/1.0.0/review_record.md
+    sha256: 09b9977fe8f151d1ba941af964cdd3d6e5d7d32fac1b962767a80a01632573e8
+review_status: approved

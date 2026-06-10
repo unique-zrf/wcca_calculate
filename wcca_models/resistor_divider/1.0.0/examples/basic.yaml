@@ -1,0 +1,22 @@
+project:
+  name: resistor_divider_basic
+circuit_blocks:
+  - id: DIV_01
+    type: resistor_divider
+    selected_model:
+      model_id: resistor_divider
+      model_version: 1.0.0
+    requirements:
+      - id: REQ-DIV-001
+        min_value: 0.415
+        max_value: 0.55
+        unit: V
+    inputs:
+      vin_min: {value: 4.75, unit: V, parameter_type: min, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      vin_max: {value: 5.25, unit: V, parameter_type: max, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      r_top:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS}, review_status: confirmed}
+      r_bottom:
+        nominal: {value: 10000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS}, review_status: confirmed}

@@ -1,0 +1,24 @@
+project:
+  name: comparator_threshold_basic
+circuit_blocks:
+  - id: CMP_UVLO
+    type: comparator_threshold
+    selected_model:
+      model_id: comparator_threshold
+      model_version: 1.0.0
+    requirements:
+      - id: REQ-CMP-001
+        min_value: 1.1
+        max_value: 1.4
+        unit: V
+    inputs:
+      vref_min: {value: 2.45, unit: V, parameter_type: min, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      vref_max: {value: 2.55, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      input_offset: {value: 0.005, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-CMP}, review_status: confirmed}
+      r_top:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      r_bottom:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+

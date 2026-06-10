@@ -1,0 +1,9 @@
+document_id: DS-CMP
+doc_type: datasheet
+title: Sample Comparator Datasheet
+part_numbers:
+  - SAMPLE-CMP-001
+parameters:
+  - reference_voltage
+  - input_offset
+usage_note: Sample metadata only; no vendor datasheet content is embedded.

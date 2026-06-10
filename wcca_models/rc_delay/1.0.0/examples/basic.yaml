@@ -1,0 +1,24 @@
+project:
+  name: rc_delay_basic
+circuit_blocks:
+  - id: RESET_DELAY
+    type: rc_delay
+    selected_model:
+      model_id: rc_delay
+      model_version: 1.0.0
+    requirements:
+      - id: REQ-RC-001
+        min_value: 0.006
+        max_value: 0.014
+        unit: s
+    inputs:
+      r:
+        nominal: {value: 100000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      c:
+        nominal: {value: 0.00000022, unit: F, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 10, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-CAP}, review_status: confirmed}
+      v_initial_min: {value: 3.135, unit: V, parameter_type: min, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      v_initial_max: {value: 3.465, unit: V, parameter_type: max, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      threshold_min: {value: 1.0, unit: V, parameter_type: min, source: {type: datasheet, document_id: DS-RESET}, review_status: confirmed}
+      threshold_max: {value: 1.2, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-RESET}, review_status: confirmed}

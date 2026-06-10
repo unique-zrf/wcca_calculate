@@ -1,0 +1,5 @@
+description: Release-style example uses the project sample RC delay block with confirmed sources and engineer-confirmed model selection.
+source: examples/project_sample/work/wcca_input.yaml
+circuit_block_id: RESET_DELAY
+expected_pass_fail: pass
+

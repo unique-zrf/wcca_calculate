@@ -1,0 +1,35 @@
+kb_card_id: KB-MODEL-rc_delay-1.0.0
+doc_type: calculation_model_card
+model_id: rc_delay
+model_version: 1.0.0
+status: approved
+applicable_circuits:
+  - rc_delay
+required_parameters:
+  - r.nominal
+  - r.tolerance
+  - c.nominal
+  - c.tolerance
+  - v_initial_min
+  - v_initial_max
+  - threshold_min
+  - threshold_max
+outputs:
+  - delay_nominal
+  - delay_worst_min
+  - delay_worst_max
+  - margin_min
+  - margin_max
+  - pass_fail
+limitations:
+  - Only supports first-order rising RC charge behavior.
+  - Does not model comparator propagation delay.
+  - Does not model capacitor leakage, dielectric absorption, or nonlinear capacitance.
+source_files:
+  - path: wcca_models/rc_delay/1.0.0/model.yaml
+    sha256: 08ee058bdd7e231a777e199d9d918794e638364033b7dba9865d351f47f2a5b4
+  - path: wcca_models/rc_delay/1.0.0/formula.md
+    sha256: 0b217c6cbd4f9ad3dff131df3508fab183a15b9a5e06d5deefae9f8b4bec260d
+  - path: wcca_models/rc_delay/1.0.0/review_record.md
+    sha256: e180211d35a3230667e6854e882816770388ac3bbad88a1843b5c5062da41828
+review_status: approved

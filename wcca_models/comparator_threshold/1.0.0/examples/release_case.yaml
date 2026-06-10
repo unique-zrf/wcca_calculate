@@ -1,0 +1,5 @@
+description: Release-style example uses the project sample comparator threshold block with confirmed sources and engineer-confirmed model selection.
+source: examples/project_sample/work/wcca_input.yaml
+circuit_block_id: CMP_UVLO
+expected_pass_fail: pass
+

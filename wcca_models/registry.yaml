@@ -1,0 +1,14 @@
+models:
+  - model_id: resistor_divider
+    version: 1.0.0
+    path: wcca_models/resistor_divider/1.0.0
+  - model_id: ldo_power_rail
+    version: 1.0.0
+    path: wcca_models/ldo_power_rail/1.0.0
+  - model_id: comparator_threshold
+    version: 1.0.0
+    path: wcca_models/comparator_threshold/1.0.0
+  - model_id: rc_delay
+    version: 1.0.0
+    path: wcca_models/rc_delay/1.0.0
+

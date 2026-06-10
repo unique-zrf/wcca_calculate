@@ -1,0 +1,10 @@
+document_id: DS-LDO
+doc_type: datasheet
+title: Sample 3.3V LDO Datasheet
+part_numbers:
+  - SAMPLE-LDO-3V3
+parameters:
+  - output_accuracy
+  - load_regulation
+  - line_regulation
+usage_note: Sample metadata only; no vendor datasheet content is embedded.

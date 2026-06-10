@@ -1,0 +1,6 @@
+parameter_rules:
+  - id: RULE-TYPICAL-001
+    description: Typical values cannot be used as worst-case values unless explicitly risk_accepted.
+  - id: RULE-SOURCE-001
+    description: Release calculations require source and review_status for every required parameter.
+

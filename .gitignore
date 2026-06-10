@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+tmp*/
+.pytest_cache/
+build/
+*.egg-info/
+*.egg
+dist/
+.coverage
+htmlcov/
+
+# Local/generated WCCA artifacts
+examples/cli_init_smoke/
+examples/project_init_smoke/
+examples/**/work/*
+!examples/project_sample/work/
+!examples/project_sample/work/wcca_input.yaml
+examples/**/output/
+examples/**/review/
+examples/**/release/
+tmp_wheel_check/

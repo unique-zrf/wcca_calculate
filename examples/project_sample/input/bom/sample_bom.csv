@@ -1,0 +1,9 @@
+Reference,Part Number,Value,Tolerance,Description,Package,Manufacturer
+R101,RES-100K-1,100k,1%,Resistor feedback top,0603,ExampleVendor
+R102,RES-10K-1,10k,1%,Resistor feedback bottom,0603,ExampleVendor
+R201,RES-100K-1,100k,1%,Comparator divider top,0603,ExampleVendor
+R202,RES-100K-1,100k,1%,Comparator divider bottom,0603,ExampleVendor
+C301,CAP-220NF-10,220nF,10%,Reset timing capacitor,0603,ExampleVendor
+R301,RES-100K-1,100k,1%,Reset timing resistor,0603,ExampleVendor
+U1,LDO-3V3-EX,3.3V,,LDO regulator,SOT23,ExampleVendor
+U2,CMP-EX,2.5V,,Comparator,SOT23,ExampleVendor

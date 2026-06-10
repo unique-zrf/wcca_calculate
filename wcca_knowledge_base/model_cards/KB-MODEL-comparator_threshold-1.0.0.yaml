@@ -1,0 +1,33 @@
+kb_card_id: KB-MODEL-comparator_threshold-1.0.0
+doc_type: calculation_model_card
+model_id: comparator_threshold
+model_version: 1.0.0
+status: approved
+applicable_circuits:
+  - comparator_threshold
+required_parameters:
+  - vref_min
+  - vref_max
+  - r_top.nominal
+  - r_top.tolerance
+  - r_bottom.nominal
+  - r_bottom.tolerance
+outputs:
+  - threshold_nominal
+  - threshold_worst_min
+  - threshold_worst_max
+  - margin_min
+  - margin_max
+  - pass_fail
+limitations:
+  - Does not model dynamic propagation delay.
+  - Does not model input bias current.
+  - Does not model complete hysteresis networks.
+source_files:
+  - path: wcca_models/comparator_threshold/1.0.0/model.yaml
+    sha256: a3daee129f73a8ba06342e42176fe96f20cdb566c0661c700f50c29304f7b095
+  - path: wcca_models/comparator_threshold/1.0.0/formula.md
+    sha256: e0485ac257c435090b158c3cd4f5fc86e21d3098cb96180b052d16cffe542854
+  - path: wcca_models/comparator_threshold/1.0.0/review_record.md
+    sha256: 6af79d698052d5c185b9726e8786a5e643644b34efa8f9fd3012417a9e05373a
+review_status: approved

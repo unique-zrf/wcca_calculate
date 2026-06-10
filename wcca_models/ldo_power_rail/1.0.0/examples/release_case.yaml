@@ -1,0 +1,5 @@
+description: Release-style example uses the project sample LDO power rail block with confirmed sources and engineer-confirmed model selection.
+source: examples/project_sample/work/wcca_input.yaml
+circuit_block_id: PWR_3V3
+expected_pass_fail: pass
+

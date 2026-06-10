@@ -1,0 +1,35 @@
+kb_card_id: KB-MODEL-resistor_divider-1.0.0
+doc_type: calculation_model_card
+model_id: resistor_divider
+model_version: 1.0.0
+status: approved
+applicable_circuits:
+  - resistor_divider
+  - voltage_sampling_divider
+required_parameters:
+  - vin_min
+  - vin_max
+  - r_top.nominal
+  - r_top.tolerance
+  - r_bottom.nominal
+  - r_bottom.tolerance
+outputs:
+  - vout_nominal
+  - vout_worst_min
+  - vout_worst_max
+  - margin_min
+  - margin_max
+  - pass_fail
+limitations:
+  - Does not include ADC input leakage.
+  - Does not include sampling capacitor loading.
+  - Does not include PCB leakage or contamination paths.
+  - Not intended for high-frequency divider networks.
+source_files:
+  - path: wcca_models/resistor_divider/1.0.0/model.yaml
+    sha256: b8fe9229e1ba9e4ea73107d313f67a5727ec8ff17d90c1bab9a33537df86c1cc
+  - path: wcca_models/resistor_divider/1.0.0/formula.md
+    sha256: 13537dcc5c20477e4079cc28f2eb9e5278717a6773e5e2c708af56e03bef341d
+  - path: wcca_models/resistor_divider/1.0.0/review_record.md
+    sha256: d7755c303987d3e730a4c56b6d668ba1f3467553bf8402d82814607ed52b816e
+review_status: approved

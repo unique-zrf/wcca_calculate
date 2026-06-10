@@ -1,0 +1,8 @@
+document_id: DS-CAP
+doc_type: datasheet
+title: Sample Ceramic Capacitor Datasheet
+part_numbers:
+  - CL05B224KP5NNNC
+parameters:
+  - capacitance_tolerance
+usage_note: Sample metadata only; no vendor datasheet content is embedded.
