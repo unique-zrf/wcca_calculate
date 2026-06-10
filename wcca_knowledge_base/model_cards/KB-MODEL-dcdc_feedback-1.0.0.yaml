@@ -1,0 +1,36 @@
+kb_card_id: KB-MODEL-dcdc_feedback-1.0.0
+doc_type: calculation_model_card
+model_id: dcdc_feedback
+model_version: 1.0.0
+status: approved
+applicable_circuits:
+  - dcdc_feedback
+  - buck_feedback
+  - boost_feedback
+required_parameters:
+  - vref_min
+  - vref_max
+  - r_top.nominal
+  - r_top.tolerance
+  - r_bottom.nominal
+  - r_bottom.tolerance
+outputs:
+  - vout_nominal
+  - vout_worst_min
+  - vout_worst_max
+  - margin_min
+  - margin_max
+  - pass_fail
+limitations:
+  - Does not model line/load regulation, output ripple, or transient response.
+  - Does not model compensation, loop stability, or feed-forward capacitors.
+  - Assumes the converter controller follows the ideal feedback equation.
+  - Does not include reference drift beyond the supplied vref_min and vref_max.
+source_files:
+  - path: wcca_models/dcdc_feedback/1.0.0/model.yaml
+    sha256: 552d9bd3409c14ad416657d150cb354857eb0cafd07c68b8e91b8c819bdd1e97
+  - path: wcca_models/dcdc_feedback/1.0.0/formula.md
+    sha256: b8da9a8677eb4c109ce816287993d676ffddcffc8c4306d378cdd4733bd40f67
+  - path: wcca_models/dcdc_feedback/1.0.0/review_record.md
+    sha256: d3d102e42377cd17f2d2c28203ad8f51049f4b4e688fe7ed9c0ada8bbeda746f
+review_status: approved

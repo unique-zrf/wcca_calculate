@@ -118,6 +118,32 @@ class ModelScenarioCoverageTest(unittest.TestCase):
             with self.subTest(index=index):
                 self.assertEqual(calculate_pass_fail(document), expected)
 
+    def test_dcdc_feedback_has_ten_scenarios(self):
+        base = single_block_document("wcca_models/dcdc_feedback/1.0.0/examples/basic.yaml")
+        cases = [
+            (base, "pass"),
+            (set_requirement(base, 4.5, 5.5), "pass"),
+            (set_requirement(base, 4.95, 5.05), "fail"),
+            (set_requirement(set_input_value(base, "vref_min", 0.780), 4.75, 5.25), "fail"),
+            (set_requirement(set_input_value(base, "vref_max", 0.830), 4.75, 5.25), "fail"),
+            (
+                set_requirement(
+                    set_input_value(set_input_value(base, "r_top.tolerance", 0.1), "r_bottom.tolerance", 0.1),
+                    4.8,
+                    5.2,
+                ),
+                "pass",
+            ),
+            (set_requirement(set_input_value(base, "r_top.tolerance", 5), 4.75, 5.25), "fail"),
+            (set_requirement(set_input_value(base, "r_bottom.tolerance", 5), 4.75, 5.25), "fail"),
+            (set_requirement(set_input_value(base, "r_top.nominal", 100000), 4.55, 5.1), "pass"),
+            (set_input_value(base, "r_top.nominal", 120000), "fail"),
+        ]
+        self.assertGreaterEqual(len(cases), 10)
+        for index, (document, expected) in enumerate(cases):
+            with self.subTest(index=index):
+                self.assertEqual(calculate_pass_fail(document), expected)
+
 
 if __name__ == "__main__":
     unittest.main()

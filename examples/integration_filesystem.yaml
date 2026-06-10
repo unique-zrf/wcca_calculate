@@ -1,0 +1,4 @@
+provider: filesystem
+output_dir: examples/project_sample/output/integration/filesystem
+payload_filename: payload.json
+summary_filename: summary.csv

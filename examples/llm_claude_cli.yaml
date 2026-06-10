@@ -1,0 +1,5 @@
+provider: claude_cli
+executable: claude
+args:
+  - --print
+timeout_seconds: 120

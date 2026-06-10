@@ -11,4 +11,6 @@ models:
   - model_id: rc_delay
     version: 1.0.0
     path: wcca_models/rc_delay/1.0.0
-
+  - model_id: dcdc_feedback
+    version: 1.0.0
+    path: wcca_models/dcdc_feedback/1.0.0

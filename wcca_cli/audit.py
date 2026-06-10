@@ -7,6 +7,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+from .agents import AGENT_PACKAGE_FILES, validate_agent_package
+from .docgen import DOCUMENT_PACKAGE_FILES, validate_document_package
 from .io import read_json, read_yaml
 from .registry import file_sha256, get_model
 from .reporting import validate_results
@@ -21,8 +23,13 @@ REQUIRED_PROJECT_FILES = [
     "output/calculation/parameter_sources.csv",
     "output/calculation/requirements_coverage.csv",
     "output/report/wcca_report.md",
+    "output/report/wcca_report.docx",
+    "output/report/wcca_report.pdf",
+    *DOCUMENT_PACKAGE_FILES,
     "review/comments/review_checklist.json",
     "review/approvals/approval_record.json",
+    "review/workflow.json",
+    *AGENT_PACKAGE_FILES,
 ]
 
 
@@ -57,6 +64,8 @@ def audit_project(project_dir: str | Path) -> dict[str, Any]:
         _audit_requirements_coverage_csv(coverage_path, results_document, issues)
     if approval_path.exists():
         _audit_approval(input_path, results_path, approval_path, issues)
+    _extend_issues(issues, validate_document_package(root), "document")
+    _extend_issues(issues, validate_agent_package(root), "agents")
     if package_path.exists():
         _audit_package(package_path, REQUIRED_PROJECT_FILES, issues)
     else:

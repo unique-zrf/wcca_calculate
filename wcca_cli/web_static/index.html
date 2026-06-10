@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WCCA Platform</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="mark">W</div>
+          <div>
+            <h1>WCCA Platform</h1>
+            <p id="projectName">Loading project</p>
+          </div>
+        </div>
+        <nav>
+          <button data-view="dashboard" class="active">Dashboard</button>
+          <button data-view="workflow">Workflow</button>
+          <button data-view="agents">Agents</button>
+          <button data-view="models">Models</button>
+          <button data-view="knowledge">Knowledge</button>
+          <button data-view="artifacts">Artifacts</button>
+        </nav>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">Project Console</div>
+            <h2 id="pageTitle">Dashboard</h2>
+          </div>
+          <div class="toolbar">
+            <button id="refreshBtn">Refresh</button>
+            <button id="runPipelineBtn" class="primary">Run Pipeline</button>
+          </div>
+        </header>
+
+        <section id="dashboard" class="view active">
+          <div class="metrics">
+            <div class="metric"><span>Result</span><strong id="resultStatus">-</strong></div>
+            <div class="metric"><span>Release</span><strong id="releaseStatus">-</strong></div>
+            <div class="metric"><span>Blocks</span><strong id="blockCount">-</strong></div>
+            <div class="metric"><span>Min Margin</span><strong id="minMargin">-</strong></div>
+            <div class="metric"><span>Audit</span><strong id="auditStatus">-</strong></div>
+          </div>
+          <div class="panel">
+            <div class="panelHead">
+              <h3>Circuit Blocks</h3>
+              <button data-action="calculate">Calculate</button>
+            </div>
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr><th>ID</th><th>Type</th><th>Model</th><th>Worst Min</th><th>Worst Max</th><th>Margins</th><th>Result</th></tr>
+                </thead>
+                <tbody id="blockRows"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="panel">
+              <div class="panelHead"><h3>Release Actions</h3></div>
+              <div class="actions">
+                <button data-action="ingest">Ingest</button>
+                <button data-action="extract">Extract</button>
+                <button data-action="normalize">Normalize</button>
+                <button data-action="input-build">Input Draft</button>
+                <button data-action="report-export">Report</button>
+                <button data-action="document-build">Document</button>
+                <button data-action="package">Package</button>
+                <button data-action="audit">Audit</button>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panelHead"><h3>Risk Items</h3></div>
+              <ul id="riskList" class="list"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="workflow" class="view">
+          <div class="panel">
+            <div class="panelHead">
+              <h3>Approval Workflow</h3>
+              <span id="workflowState" class="pill">-</span>
+            </div>
+            <div class="actions">
+              <button data-workflow="start">Start Review</button>
+              <button data-workflow="approve">Approve</button>
+              <button data-workflow="reject">Reject</button>
+              <button data-workflow="archive">Archive</button>
+            </div>
+            <pre id="workflowJson"></pre>
+          </div>
+        </section>
+
+        <section id="agents" class="view">
+          <div class="panel">
+            <div class="panelHead">
+              <h3>Multi-Agent Run</h3>
+              <button data-action="agent-run">Run Agents</button>
+            </div>
+            <div class="agentGrid" id="agentCards"></div>
+          </div>
+        </section>
+
+        <section id="models" class="view">
+          <div class="panel">
+            <div class="panelHead"><h3>Model Registry</h3></div>
+            <div class="tableWrap">
+              <table>
+                <thead><tr><th>Model</th><th>Version</th><th>Status</th><th>Circuits</th><th>Knowledge Card</th></tr></thead>
+                <tbody id="modelRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="knowledge" class="view">
+          <div class="panel">
+            <div class="panelHead">
+              <h3>Knowledge Search</h3>
+              <div class="search">
+                <input id="knowledgeQuery" value="resistor_divider worst case" />
+                <button id="knowledgeBtn">Search</button>
+              </div>
+            </div>
+            <div id="knowledgeResults" class="knowledgeResults"></div>
+          </div>
+        </section>
+
+        <section id="artifacts" class="view">
+          <div class="grid2">
+            <div class="panel">
+              <div class="panelHead">
+                <h3>Artifacts</h3>
+                <button data-action="integration-dispatch">Dispatch Integration</button>
+              </div>
+              <ul id="artifactList" class="list"></ul>
+            </div>
+            <div class="panel">
+              <div class="panelHead"><h3>Preview</h3></div>
+              <pre id="artifactPreview"></pre>
+            </div>
+          </div>
+        </section>
+
+        <div id="toast"></div>
+      </main>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>

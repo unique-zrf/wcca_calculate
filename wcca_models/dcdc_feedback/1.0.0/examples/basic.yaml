@@ -1,0 +1,26 @@
+project:
+  name: dcdc_feedback_basic
+circuit_blocks:
+  - id: BUCK_5V
+    type: dcdc_feedback
+    selected_model:
+      model_id: dcdc_feedback
+      model_version: 1.0.0
+    requirements:
+      - id: REQ-DCDC-001
+        min_value: 4.75
+        max_value: 5.25
+        unit: V
+    inputs:
+      vref_min: {value: 0.792, unit: V, parameter_type: min, source: {type: datasheet, document_id: DS-DCDC}, review_status: confirmed}
+      vref_max: {value: 0.808, unit: V, parameter_type: max, source: {type: datasheet, document_id: DS-DCDC}, review_status: confirmed}
+      temperature_min: {value: -40, unit: degC, parameter_type: min, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      temperature_max: {value: 85, unit: degC, parameter_type: max, source: {type: requirement, document_id: REQ}, review_status: confirmed}
+      r_top:
+        nominal: {value: 105000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+        tempco: {value: 100, unit: ppm/C, parameter_type: max, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+      r_bottom:
+        nominal: {value: 20000, unit: ohm, parameter_type: nominal, source: {type: bom, document_id: BOM}, review_status: confirmed}
+        tolerance: {value: 1, unit: "%", parameter_type: tolerance, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}
+        tempco: {value: 100, unit: ppm/C, parameter_type: max, source: {type: datasheet, document_id: DS-RES}, review_status: confirmed}

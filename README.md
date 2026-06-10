@@ -5,7 +5,7 @@ This repository implements the first executable slice of `WCCA计算模型库与
 Phase 1 scope:
 
 - WCCA Core CLI
-- Four approved calculation models
+- Five approved calculation models
 - Local file knowledge cards
 - Example `wcca_input.yaml`
 - Unit/regression tests
@@ -25,12 +25,21 @@ python -m wcca_cli kb search "RC0402FR-07100KL"
 python -m wcca_cli kb show DS-LDO
 python -m wcca_cli kb search "typical worst case"
 python -m wcca_cli kb show KB-MODEL-resistor_divider-1.0.0
+python -m wcca_cli kb query "resistor_divider worst case" --config examples/knowledge_local.yaml
 python -m wcca_cli validate-input --input examples/project_sample/work/wcca_input.yaml
 python -m wcca_cli calculate --input examples/project_sample/work/wcca_input.yaml --output examples/project_sample/output/calculation
 python -m wcca_cli validate --input examples/project_sample/work/wcca_input.yaml --results examples/project_sample/output/calculation/results.json
 python -m wcca_cli report --input examples/project_sample/work/wcca_input.yaml --results examples/project_sample/output/calculation/results.json --output examples/project_sample/output/report
+python -m wcca_cli document-build --input examples/project_sample/work/wcca_input.yaml --results examples/project_sample/output/calculation/results.json --output examples/project_sample/output/document --knowledge-config examples/knowledge_local.yaml
+python -m wcca_cli validate-document --project examples/project_sample
+python -m wcca_cli extract-parameters --project examples/project_sample --knowledge-config examples/knowledge_local.yaml
+python -m wcca_cli simulate --project examples/project_sample
+python -m wcca_cli agent-plan --project examples/project_sample --llm-config examples/llm_none.yaml
+python -m wcca_cli agent-run --project examples/project_sample --llm-config examples/llm_none.yaml --knowledge-config examples/knowledge_local.yaml
 python -m wcca_cli review-checklist --input examples/project_sample/work/wcca_input.yaml --results examples/project_sample/output/calculation/results.json --output examples/project_sample/review/comments
+python -m wcca_cli review-flow --project examples/project_sample --action start --reviewer sample_engineer
 python -m wcca_cli approve --input examples/project_sample/work/wcca_input.yaml --results examples/project_sample/output/calculation/results.json --output examples/project_sample/review/approvals --reviewer sample_engineer --decision approved
+python -m wcca_cli integration-dispatch --project examples/project_sample --config examples/integration_filesystem.yaml
 python -m wcca_cli package --project examples/project_sample --output examples/project_sample/release/wcca_package.zip
 python -m wcca_cli audit --project examples/project_sample
 ```
@@ -70,11 +79,40 @@ If extracted requirements include `model_id`, `input-build` maps them into match
 - `examples/project_sample/review/comments/review_checklist.md`
 - `examples/project_sample/review/approvals/approval_record.md`
 
-`package` writes `archive_manifest.json` with one SHA256 hash per archived file. `audit` checks input/result/model hashes, approval records, validation status, package contents, package member hashes against that manifest, and `model_trace.json` consistency with the traceability embedded in `results.json`.
+`package` writes `archive_manifest.json` with one SHA256 hash per archived file. `audit` checks input/result/model hashes, approval records, agent workplan and LLM prompt/call hashes, validation status, package contents, package member hashes against that manifest, and `model_trace.json` consistency with the traceability embedded in `results.json`.
 
 Calculation output includes `parameter_sources.csv`, a reviewable source matrix for each input parameter with value, unit, source type, `document_id`, review status, and risk reason.
 
 `wcca_results.xlsx` includes separate sheets for summary, calculation steps, traceability, risk items, parameter sources, requirements coverage, and unit conversions so engineers can review the same evidence without opening JSON.
+
+Knowledge providers are configured through small YAML files:
+
+- `examples/knowledge_local.yaml`: built-in file knowledge base.
+- `examples/knowledge_hardware_database.yaml`: calls `D:\workspace\git_workspace\Hardware-DataBase` through its `RAGPipeline` when that environment is installed.
+- `examples/knowledge_ragflow.yaml`: calls a configurable RAGFlow HTTP endpoint.
+
+`document-build` generates a traceable WCCA document package:
+
+- `wcca_document.md`
+- `source_references.md`
+- `traceability_matrix.csv`
+- `docgen_manifest.json`
+
+`validate-document` checks the document package manifest, required files, input/result hashes, citation coverage, and traceability rows before release audit.
+
+`extract-parameters` queries the configured knowledge provider and writes review-required parameter candidates to `work/extracted/parameter_candidates.yaml` and `parameter_candidates.csv`. It does not modify release input values.
+
+`simulate` provides the simulation integration point. Without an external simulator configured it writes a skipped-but-auditable summary under `output/simulation/`, so later LTspice/ngspice scripts can be attached without changing the calculation core.
+
+`agent-plan` writes a deterministic, guardrailed agent workplan under `work/agents/`. `agent-run` executes the controlled multi-agent workflow and writes role artifacts for planner, parameter extraction, circuit analysis, calculation review, report writing, and compliance review. It also writes `llm_prompt.md`, `llm_call.json`, and `agent_run.json`, so optional model-assisted suggestions remain auditable by prompt, provider, status, error, artifact path, and SHA256 hashes. These files are included in `package` and checked by `audit`. LLM support is optional:
+
+- `examples/llm_none.yaml`: offline mode, no external model call.
+- `examples/llm_openai_compatible.yaml`: OpenAI-compatible HTTP endpoint using `OPENAI_API_KEY`.
+- `examples/llm_claude_cli.yaml`: command provider for Claude CLI-style tools.
+
+Claude CLI is useful as an optional reviewer/writer adapter when your engineering environment already uses it, but it is not a core dependency. Agent output is limited to suggestions and review questions; it cannot approve parameters, change pass/fail results, or alter release decisions.
+
+`review-flow` maintains a platform-style approval state machine in `review/workflow.json` with states such as `draft`, `in_review`, `blocked`, `approved`, `rejected`, and `archived`. `integration-dispatch` exports a normalized enterprise payload under `output/integration/`; the included filesystem provider is offline-testable, and the webhook provider can be configured for PLM/ERP/document-management bridges.
 
 `validate` recalculates Pass/Fail and `margin_min`/`margin_max` from the reported worst-case values and requirement limits, so tampered or inconsistent result summaries are blocked before approval.
 

@@ -1,0 +1,8 @@
+provider: ragflow
+base_url: http://localhost:9380
+endpoint: /api/v1/retrieval
+api_key: ""
+dataset_id: ""
+timeout_seconds: 30
+payload:
+  similarity_threshold: 0.2

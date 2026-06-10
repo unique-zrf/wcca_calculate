@@ -1,0 +1,57 @@
+model_id: dcdc_feedback
+model_name: DC/DC Feedback Network Worst Case Model
+version: 1.0.0
+status: approved
+owner: hardware-wcca-team
+kb_card_id: KB-MODEL-dcdc_feedback-1.0.0
+formula_doc: formula.md
+review_record: review_record.md
+circuit_types:
+  - dcdc_feedback
+  - buck_feedback
+  - boost_feedback
+inputs:
+  - name: vref_min
+    unit: V
+    required: true
+    source_required: true
+  - name: vref_max
+    unit: V
+    required: true
+    source_required: true
+  - name: temperature_min
+    unit: degC
+    required: false
+  - name: temperature_max
+    unit: degC
+    required: false
+  - name: r_top
+    unit: ohm
+    required: true
+    fields: [nominal, tolerance]
+  - name: r_bottom
+    unit: ohm
+    required: true
+    fields: [nominal, tolerance]
+outputs:
+  - name: vout_nominal
+    unit: V
+  - name: vout_worst_min
+    unit: V
+  - name: vout_worst_max
+    unit: V
+  - name: margin_min
+    unit: "%"
+  - name: margin_max
+    unit: "%"
+  - name: pass_fail
+    unit: string
+capabilities:
+  supports_worst_case: true
+  supports_rss: false
+  supports_monte_carlo: false
+  engineer_review_required: true
+review:
+  reviewers: [hardware_engineer, power_engineer, wcca_engineer]
+  approved_at: 2026-06-10
+  approval_record: review_record.md

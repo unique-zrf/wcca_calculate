@@ -27,8 +27,35 @@ from wcca_cli.validation import has_errors, validate_input_document
 SAMPLE_INPUT = Path("examples/project_sample/work/wcca_input.yaml")
 
 
+def build_sample_document_package() -> None:
+    status = main([
+        "document-build",
+        "--input",
+        "examples/project_sample/work/wcca_input.yaml",
+        "--results",
+        "examples/project_sample/output/calculation/results.json",
+        "--output",
+        "examples/project_sample/output/document",
+        "--knowledge-config",
+        "examples/knowledge_local.yaml",
+    ])
+    if status != 0:
+        raise AssertionError("document-build failed")
+    agent_status = main([
+        "agent-run",
+        "--project",
+        "examples/project_sample",
+        "--llm-config",
+        "examples/llm_none.yaml",
+        "--knowledge-config",
+        "examples/knowledge_local.yaml",
+    ])
+    if agent_status != 0:
+        raise AssertionError("agent-run failed")
+
+
 class Phase1FlowTest(unittest.TestCase):
-    def test_four_phase1_models_are_registered_and_approved(self):
+    def test_phase1_models_are_registered_and_approved(self):
         models = {(model.model_id, model.version, model.metadata["status"]) for model in iter_models()}
         self.assertEqual(
             models,
@@ -37,6 +64,7 @@ class Phase1FlowTest(unittest.TestCase):
                 ("ldo_power_rail", "1.0.0", "approved"),
                 ("comparator_threshold", "1.0.0", "approved"),
                 ("rc_delay", "1.0.0", "approved"),
+                ("dcdc_feedback", "1.0.0", "approved"),
             },
         )
 
@@ -569,6 +597,16 @@ class ReviewWorkflowTest(unittest.TestCase):
         )
         self.assertEqual(record["validation_status"], "passed")
         self.assertTrue(Path("examples/project_sample/review/approvals/approval_record.json").exists())
+        workflow_status = main([
+            "review-flow",
+            "--project",
+            "examples/project_sample",
+            "--action",
+            "approve",
+            "--reviewer",
+            "unit_test_reviewer",
+        ])
+        self.assertEqual(workflow_status, 0)
 
     def test_cli_review_and_approve(self):
         review_stream = io.StringIO()
@@ -628,6 +666,7 @@ class ReviewWorkflowTest(unittest.TestCase):
 
 class AuditWorkflowTest(unittest.TestCase):
     def test_project_audit_passes_for_release_package(self):
+        build_sample_document_package()
         approve_project(
             "examples/project_sample/work/wcca_input.yaml",
             "examples/project_sample/output/calculation/results.json",
@@ -635,11 +674,14 @@ class AuditWorkflowTest(unittest.TestCase):
             reviewer="audit_test_reviewer",
             decision="approved",
         )
+        main(["review-flow", "--project", "examples/project_sample", "--action", "approve", "--reviewer", "audit_test_reviewer"])
         main(["package", "--project", "examples/project_sample", "--output", "examples/project_sample/release/wcca_package.zip"])
         with zipfile.ZipFile("examples/project_sample/release/wcca_package.zip") as archive:
             manifest = json.loads(archive.read("archive_manifest.json").decode("utf-8"))
         result_entry = next(item for item in manifest["files"] if item["path"] == "output/calculation/results.json")
         self.assertIn("sha256", result_entry)
+        self.assertTrue(any(item["path"] == "work/agents/agent_workplan.yaml" for item in manifest["files"]))
+        self.assertTrue(any(item["path"] == "work/agents/llm_call.json" for item in manifest["files"]))
         result = audit_project("examples/project_sample")
         self.assertEqual(result["status"], "passed", result["issues"])
 
@@ -659,6 +701,7 @@ class AuditWorkflowTest(unittest.TestCase):
             approval_path.write_text(json.dumps(original, indent=2), encoding="utf-8")
 
     def test_project_audit_fails_on_package_manifest_hash_mismatch(self):
+        build_sample_document_package()
         approve_project(
             "examples/project_sample/work/wcca_input.yaml",
             "examples/project_sample/output/calculation/results.json",
@@ -666,6 +709,7 @@ class AuditWorkflowTest(unittest.TestCase):
             reviewer="audit_hash_reviewer",
             decision="approved",
         )
+        main(["review-flow", "--project", "examples/project_sample", "--action", "approve", "--reviewer", "audit_hash_reviewer"])
         package_path = Path("examples/project_sample/release/wcca_package.zip")
         main(["package", "--project", "examples/project_sample", "--output", str(package_path)])
         rebuilt_path = package_path.with_suffix(".tampered.zip")
@@ -720,7 +764,20 @@ class AuditWorkflowTest(unittest.TestCase):
         finally:
             trace_path.write_text(json.dumps(original, indent=2), encoding="utf-8")
 
+    def test_project_audit_fails_on_agent_prompt_hash_mismatch(self):
+        build_sample_document_package()
+        prompt_path = Path("examples/project_sample/work/agents/llm_prompt.md")
+        original = prompt_path.read_text(encoding="utf-8")
+        try:
+            prompt_path.write_text(original + "\nTampered agent prompt.\n", encoding="utf-8")
+            result = audit_project("examples/project_sample")
+            self.assertEqual(result["status"], "failed")
+            self.assertTrue(any("LLM prompt hash" in issue["message"] for issue in result["issues"]))
+        finally:
+            prompt_path.write_text(original, encoding="utf-8")
+
     def test_cli_audit_passes(self):
+        build_sample_document_package()
         approve_project(
             "examples/project_sample/work/wcca_input.yaml",
             "examples/project_sample/output/calculation/results.json",
@@ -728,6 +785,7 @@ class AuditWorkflowTest(unittest.TestCase):
             reviewer="audit_cli_reviewer",
             decision="approved",
         )
+        main(["review-flow", "--project", "examples/project_sample", "--action", "approve", "--reviewer", "audit_cli_reviewer"])
         main(["package", "--project", "examples/project_sample", "--output", "examples/project_sample/release/wcca_package.zip"])
         stream = io.StringIO()
         with contextlib.redirect_stdout(stream):

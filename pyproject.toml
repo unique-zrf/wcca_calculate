@@ -6,6 +6,8 @@ requires-python = ">=3.10"
 dependencies = [
   "PyYAML>=6.0",
   "openpyxl>=3.1",
+  "python-docx>=1.1",
+  "reportlab>=4.0",
 ]
 
 [tool.setuptools]
@@ -26,4 +28,9 @@ wcca_knowledge_base = [
   "index/*.yaml",
   "review_notes/*.md",
   "datasheets/*/*/*.yaml",
+]
+wcca_cli = [
+  "web_static/*.html",
+  "web_static/*.css",
+  "web_static/*.js",
 ]

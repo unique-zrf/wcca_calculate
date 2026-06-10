@@ -1,0 +1,10 @@
+provider: openai_compatible
+base_url: https://api.openai.com
+endpoint: /v1/chat/completions
+api_key: env:OPENAI_API_KEY
+model: gpt-4.1
+temperature: 0.2
+timeout_seconds: 60
+system_prompt: >
+  You are a WCCA engineering assistant. Only provide review suggestions
+  and report wording. Do not invent parameters or approve release decisions.

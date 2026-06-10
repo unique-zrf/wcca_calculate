@@ -17,8 +17,8 @@ INPUT_DIRS = [
     "input/simulation",
 ]
 
-WORK_DIRS = ["work/extracted", "work/normalized"]
-OUTPUT_DIRS = ["output/calculation", "output/report", "output/traceability", "output/risk"]
+WORK_DIRS = ["work/extracted", "work/normalized", "work/agents"]
+OUTPUT_DIRS = ["output/calculation", "output/report", "output/traceability", "output/risk", "output/integration"]
 REVIEW_DIRS = ["review/comments", "review/approvals"]
 
 
@@ -82,4 +82,3 @@ def _missing_categories(input_root: Path) -> list[str]:
         if not has_file:
             missing.append(category)
     return missing
-

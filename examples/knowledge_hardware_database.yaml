@@ -1,0 +1,4 @@
+provider: hardware
+path: D:\workspace\git_workspace\Hardware-DataBase
+kb_name: default
+fallback_to_files: true
